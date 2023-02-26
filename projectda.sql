@@ -1,7 +1,8 @@
 select * from dataproject..CovidDeath
 where continent is not null
 order  by 3,4
-----select * from dataproject..CovidVaccination order by 3,4
+
+select * from dataproject..CovidVaccination order by 3,4
 
 --select data that we are going to be using
 select location, date, total_cases, new_cases, total_deaths, population
@@ -30,6 +31,7 @@ group by location, population
 order  by percent_population_infected desc
 
 --showing countries with highest death count per population
+
 select location, max(cast(total_deaths as int)) as Total_death_count
 from dataproject..CovidDeath
 where continent is not null
