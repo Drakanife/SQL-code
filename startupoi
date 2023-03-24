@@ -1,0 +1,82 @@
+-- create data table 
+
+create table customer 
+(customer_id int primary key,
+first_name varchar(50),
+last_name varchar (50),
+address varchar (50),
+district varchar(50),
+city varchar(50)
+);
+
+create table customer_order
+(order_id int primary key,
+product varchar(50),
+customer_id int,
+delivery date,
+amount int,
+price decimal (5,2)
+);
+
+-- Import information
+
+insert into customer 
+value 	(001, 'Alex', 'Xander', '174 Le Lai', 'D.1', 'TPHCM'),
+		(002, 'Mary','Jane','89 Hang Rong', 'D.2', 'Ha Noi'),
+        (003, 'Perter', 'Parker', '82 Nguyen Trai', 'D.5', 'TPHCM'),
+        (004, 'Bruce', 'Waye', '179 CMT8','D.3', 'TPHCM'),
+        (005, 'Thor', 'Odinson', '278  Tran Hung Dao','D.5','TPHCM' ),
+        (006, 'Authur', 'Wales', '50 Hang Dinh', 'D.9', 'Ha Noi'),
+        (007, 'Leo', 'Theme', '39 Dong Nao', 'D.10', 'Da Nang'),
+        (008, 'Katy','Bella', '39 Thai Phien', 'D.11', 'Da Nang'),
+        (009, 'Affer', 'Bison', '7 Le Loi', 'D.1', 'Ha Noi' ),
+        (010, 'Kang', 'Conquest', '19 Ban Co', 'D.3', "TPHCM");
+
+INSERT INTO customer_order
+VALUES 
+		(388, 'Product A',001, '2023-03-25', 2, 10.50),
+		(333, 'Product B',002, '2023-03-26', 1, 5.99),
+		(343, 'Product C',003, '2023-03-27', 3, 15.00),
+		(354, 'Product D',004, '2023-03-28', 1, 7.50),
+		(346, 'Product E',005, '2023-03-29', 2, 12.00),
+		(356, 'Product A',006, '2023-03-30', 1, 10.50),
+		(317, 'Product A',007, '2023-03-31', 4, 10.50),
+		(418, 'Product B',008, '2023-04-01', 2, 5.99),
+		(419, 'Product C',009, '2023-04-02', 1, 15.00),
+		(410, 'Product E',010, '2023-04-03', 3, 18.00),
+		(411, 'Product E',003, '2023-04-04', 1, 12.00),
+		(412, 'Product A',009, '2023-04-05', 2, 10.50),
+		(413, 'Product B',001, '2023-04-06', 1, 5.99),
+		(414, 'Product C',008, '2023-04-07', 4, 15.00),
+		(415, 'Product D',009, '2023-04-08', 2, 7.50),
+		(416, 'Product A',004, '2023-04-09', 1, 10.50),
+		(417, 'Product A',005, '2023-04-10', 3, 10.50),
+		(422, 'Product D',001, '2023-04-11', 1, 7.50),
+		(423, 'Product D',003, '2023-04-12', 2, 7.50),
+		(424, 'Product D',005, '2023-04-13', 1, 7.50),
+		(511, 'Product A',001, '2023-05-11', 2, 10.50),
+		(512, 'Product B',001, '2023-05-12', 1, 5.99),
+		(513, 'Product C',001, '2023-05-13', 3, 15.00),
+		(514, 'Product D',001, '2023-05-14', 1, 7.50),
+		(515, 'Product E',002, '2023-05-15', 2, 12.00),
+		(516, 'Product A',003, '2023-05-21', 1, 10.50),
+		(517, 'Product A',002, '2023-05-22', 4, 10.50),
+		(518, 'Product B',002, '2023-05-23', 2, 5.99),
+		(519, 'Product C',002, '2023-05-24', 1, 15.00),
+		(510, 'Product E',002, '2023-05-25', 3, 18.00);
+        
+        
+-- Query data 
+
+-- Query to show all the customers that made more than 5 orders
+
+select 	cus.customer_id, 
+		concat(cus.first_name, " ",cus.last_name) as full_name,
+		cus.address,
+        cus.city,
+		count(ord.order_id) as num_order
+from customer_order ord
+join customer cus on cus.customer_id = ord.customer_id
+group by cus.customer_id
+having count(ord.order_id) > 5
+order by cus.customer_id
