@@ -1,0 +1,38 @@
+import pytest
+from arithmetic_arranger import arithmetic_arranger
+
+def test_correct_format():
+    problems = ["32 + 698", "3801 - 2", "45 + 43", "123 + 49"]
+    result = arithmetic_arranger(problems)
+    expected = "   32      3801      45      123\n+ 698    -    2    + 43    +  49\n-----    ------    ----    -----\n"
+    assert result == expected
+
+def test_with_answers():
+    problems = ["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"]
+    result = arithmetic_arranger(problems, True)
+    expected = "  32         1      9999      523\n+  8    - 3801    + 9999    -  49\n----    ------    ------    -----\n  40     -3800     19998      474\n"
+    assert result == expected
+
+def test_error_too_many_problems():
+    problems = ["32 + 698", "3801 - 2", "45 + 43", "123 + 49", "1 + 1"]
+    result = arithmetic_arranger(problems)
+    expected = "Error: Too many problems."
+    assert result == expected
+
+def test_error_invalid_operator():
+    problems = ["32 * 698", "3801 / 2", "45 + 43", "123 + 49"]
+    result = arithmetic_arranger(problems)
+    expected = "Error: Operator must be '+' or '-'."
+    assert result == expected
+
+def test_error_invalid_number():
+    problems = ["32 + 698", "3801 - abc", "45 + 43", "123 + 49"]
+    result = arithmetic_arranger(problems)
+    expected = "Error: Numbers must only contain digits."
+    assert result == expected
+
+def test_error_number_width():
+    problems = ["32 + 698", "3801 - 2", "45000 + 43", "123 + 49"]
+    result = arithmetic_arranger(problems)
+    expected = "Error: Numbers cannot be more than four digits."
+    assert result == expected
